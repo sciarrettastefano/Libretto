@@ -14,70 +14,54 @@
 #          "Grifondoro", ""]
 #
 # Grifondoro = [Harry, Ron]
+
+
+
+
 from dataclasses import dataclass
-class Person:
-    def __init__(self, nome, cognome, eta,
-                 capelli, occhi, casa, incantesimo="Non ancora definito"):
-        self.nome = nome
-        self._cognome = cognome
-        self.eta = eta
-        self.capelli = capelli
-        self.occhi = occhi
-        self.casa = casa
-        self.__prova = None
-        self.incantesimo = incantesimo
+from voto.voto import Libretto, Voto  # l'istruzione import esegue il file Voto --> occhio ad avere solo definizioni e non istruzioni in voto
+# importiamo più nomi
 
-    def __str__(self):
-        return f"Person: {self.nome} {self._cognome} \n"
+# from voto import *
+# importa tutti i nomi in voto in maniera indipendente
+# sconsigliato perchè non so cosa importo (a meno che la libreria l'abbia scritta io e quindi la conosco)
+# sulla console "dir(nome_modulo)" per sapere cosa contiene
+# NB: non importa le definizioni con underscore (considerate private)
 
-    @property
-    def cognome(self): # eq. GETTER
-        return self._cognome
-    @cognome.setter
-    def cognome(self, value): # eq. SETTER
-        #CONTROLLI per verificare che value sia compativile con _cognome
-        self._cognome = value
+# import voto
+# così importiamo un solo nome (del file/libreria), e accedo alle sue classi con la notazione puntata
 
-class Student(Person):
-    def __init__(self, nome, cognome, eta,
-                 capelli, occhi, casa, animale, incantesimo="Non ancora definito"):
-        super().__init__(nome, cognome, eta, capelli, occhi, casa, incantesimo)
-        self.animale = animale
+# i package si importano allo stesso modo nei file
 
-    def __str__(self):
-        return f"Student: {self.nome} - {self._cognome} - {self.casa} \n "
+from scuola import Person, Student, Teacher, Casa, Scuola
 
-    def __repr__(self):
-        return f"Student(nome, cognome, eta, capelli, occhi, casa, animale)"
 
-    def prettyPrint(self):
-        print("Voglio stampare meglio")
+# class Voto:
+#     def __init__(self, materia, punteggio, data, lode):
+#         if punteggio == 30:
+#             self.materia = materia
+#             self.punteggio = punteggio
+#             self.data = data
+#             self.lode = lode
+#         elif punteggio < 30:
+#             self.materia = materia
+#             self.punteggio = punteggio
+#             self.data = data
+#             self.lode = False
+#         else:
+#             raise ValueError(f"Attenzione, non posso creare un voto con punteggio {self.punteggio}")
+#
+#     def __str__(self):
+#         if self.lode:
+#             return f"In {self.materia} hai preso {self.punteggio} e lode il {self.data}"
+#         else:
+#             return f"In {self.materia} hai preso {self.punteggio} il {self.data}"
 
-class Teacher(Person):
-    def __init__(self, nome, cognome, eta,
-                 capelli, occhi, casa, materia, incantesimo="Non ancora definito"):
-        super().__init__(nome, cognome, eta, capelli, occhi, casa, incantesimo)
-        self.materia = materia
-    def __str__(self):
-        return f"Teacher: {self.nome} - {self._cognome} - {self.materia} \n "
-class Casa:
-    def __init__(self, nome, studenti = [] ):
-        self.nome = nome
-        self.studenti = studenti
+# DECORATORE: dataclass ci implementa i metodi necessari minimi perchè la classe sia "completa" (vedi slide)
+# ---> "boilerplate" code ---> codice minimo per una determinata clase con determinato uso
 
-    def addStudente(self, studente):
-        # self.studenti.append(studente) # --> [ x,x,x [s1, s2]]
-        self.studenti.extend(studente) # --> [ x,x,x, s1, s2 ]
 
-    def __str__(self):
-        if len(self.studenti) == 0:
-            return "La casa {self.nome} + è vuota."
 
-        mystr = f"\n Lista degli studenti iscritti alla casa {self.nome} \n"
-        for s in self.studenti:
-            mystr += str(s)
-
-        return mystr
 
 
 # Grifondoro
@@ -129,6 +113,46 @@ print(Harry, Ron, Susan, Xenophilius, Remus)
 personaggi = [Harry, Hermione, Ron, Neville, Ginny, Sirius, Remus, Minerva, Albus, Rubeus, James, Lily, Fred, George,
               Draco, Severus, Horace, Bellatrix, Lucius, Narcissa, Pansy, Blaise, Luna, Cho, Gilderoy, Filius, Xenophilius,
               Padma, Michael, Cedric, Pomona, Hannah, Ernest, Susan, Ted]
+
+grifondoro = Casa("Grifondoro", [])
+tassorosso = Casa("Tassorosso")
+corvonero = Casa("Corvonero")
+serpeverde = Casa("Serpeverde")
+
+for p in personaggi:
+#    if p.casa == grifondoro.nome & isinstance(p, Student):
+#        grifondoro.addStudente(p)
+#    if p.casa == corvonero.nome & isinstance(p, Student):
+#        corvonero.addStudente(p)
+#    if p.casa == serpeverde.nome & isinstance(p, Student):
+#        serpeverde.addStudente(p)
+#    if p.casa == tassorosso.nome & isinstance(p, Student):
+#        tassorosso.addStudente(p)
+
+    if isinstance(p, Student):
+        match p.casa:
+            case ("Grifondoro"):
+                grifondoro.addStudente(p)
+            case ("Corvonero"):
+                corvonero.addStudente(p)
+            case ("Serpeverde"):
+                serpeverde.addStudente(p)
+            case ("Tassorosso"):
+                tassorosso.addStudente(p)
+            case _:
+                print(f"Jumping {p}")
+
+print(grifondoro)
+
+v1 = Voto("Trasfigurazioni", 24, "2022-02-14", False)
+v2 = Voto("Pozioni", 30, "2022-02-18", True)
+v3 = Voto("Difesa contro le arti oscure", 27, "2022-02-23", False)
+print(v1)
+
+mylib = Libretto("Harry", [v1, v2])
+print(mylib)
+mylib.append(v3)
+print(mylib)
 
 # print(Lily._cognome) # NOOOO!
 
