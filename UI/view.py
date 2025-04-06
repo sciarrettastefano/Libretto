@@ -70,7 +70,7 @@ class View:
 # ...A QUI
 
     def _fillDDVoto(self):
-        for i in range(18, 30):
+        for i in range(18, 31):
             self._ddVoto.options.append(ft.dropdown.Option(str(i)))
         self._ddVoto.options.append(ft.dropdown.Option("30L"))
 

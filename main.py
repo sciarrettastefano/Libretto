@@ -19,7 +19,7 @@
 
 
 from dataclasses import dataclass
-from voto.voto import Libretto, Voto  # l'istruzione import esegue il file Voto --> occhio ad avere solo definizioni e non istruzioni in voto
+from voto.model import Libretto, Voto  # l'istruzione import esegue il file Voto --> occhio ad avere solo definizioni e non istruzioni in voto
 # importiamo più nomi
 
 # from voto import *

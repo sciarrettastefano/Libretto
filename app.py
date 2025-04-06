@@ -1,8 +1,8 @@
 # MODEL ---> CONTIENE LA LOGICA E LE FUNZIONALITà DEL PROGRAMMA, COMUNICA CON CONTROLLER
 
 import flet as ft
-from controller import Controller
-from view import View
+from UI.controller import Controller
+from UI.view import View
 
 # Struttura MVC DA QUI...
 def main(page: ft.Page):

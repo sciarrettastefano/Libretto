@@ -1,9 +1,9 @@
 # CONTROLLER ---> GESTISCE LE HANDLE TRA VIEW E MODEL, FA DA TRAMITE TRA VIEW E MODEL
 from scuola import Student
-from view import View
-from voto.voto import Libretto, Voto
+from UI.view import View
+from voto.model import Libretto
 import flet as ft
-
+from voto.voto import Voto
 
 # Struttura MVC DA QUI...
 class Controller:
@@ -13,7 +13,7 @@ class Controller:
         self._student = Student(nome="Harry", cognome="Potter", eta=11, capelli="castani", occhi="azzurri",
                                 casa="Grifondoro", animale="civetta", incantesimo="Expecto Patronum")
         self._model = Libretto(self._student, [])
-        self.fillLibretto()
+        # self.fillLibretto() <-- non lo usiamo più, usiamo il dao dal modello per "caricarci" gli esami
 
 
     def handleAggiungi(self, e):
@@ -63,12 +63,13 @@ class Controller:
         """
         return str(self._student)
 
-    def fillLibretto(self):
+    # Non è competenza del controller fare l'azione di riempire il libretto
+    """def fillLibretto(self):
         # Voti di esempio
         self._model.append(Voto("Difesa contro le arti oscure", 25, "2022-01-30", False))
         self._model.append(Voto("Babbanologia", 30, "2022-02-12", False))
         self._model.append(Voto("Pozioni", 21, "2022-06-14", False))
-        self._model.append(Voto("Trasfigurazione", 21, "2022-06-14", False))
+        self._model.append(Voto("Trasfigurazione", 21, "2022-06-14", False))"""
 
 
 
