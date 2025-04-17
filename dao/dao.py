@@ -6,8 +6,13 @@ from voto.voto import Voto
 class LibrettoDAO:
     """def __init__(self):
         self.dbConnect= DBConnect()"""
+    # E' classe stateless, ne usimao solo i metodi, che non ricevono
+    # parametro il "self"
+    # Possiamo chiamare direttamente i suoi metodi come fossero class methods
+    # Lo facciamo perchè così è molto più efficiente se facciamo molte query
 
-    def getAllVoti(self):
+    @staticmethod
+    def getAllVoti():
         """cnx= mysql.connector.connect(...)"""
         cnx = DBConnect.getConnection()
 
@@ -35,7 +40,8 @@ class LibrettoDAO:
         """Ciò scritto sopra è l'uso std di un metodo del dao e dell'interfaccia al database.
         Quelo che cambia è la query solo, la struttura resta uguale."""
 
-    def addVoto(self, voto: Voto):
+    @staticmethod
+    def addVoto(voto: Voto):
         """cnx= mysql.connector.connect(...)"""
         cnx = DBConnect.getConnection()
 
@@ -50,7 +56,8 @@ class LibrettoDAO:
         cnx.close()
         return
 
-    def hasVoto(self, voto: Voto):
+    @staticmethod
+    def hasVoto(voto: Voto):
         """cnx= mysql.connector.connect(...)"""
         cnx = DBConnect.getConnection()
 
@@ -60,6 +67,7 @@ class LibrettoDAO:
 
         cursor.execute(query, (voto.materia, ))
         res = cursor.fetchall() # perchè sennò ci dà errore per non aver usato tutti i risultati
+        cnx.close()
         return len(res) > 0 # Dà indicazione se c'è il voto nel db o meno
 
 

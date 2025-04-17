@@ -14,10 +14,9 @@ class Libretto:
         self.fillLibretto()
 
     def fillLibretto(self):
-        allEsami = self.dao.getAllVoti() # Ci dà tutti gli esami presenti nel database
+        allEsami = LibrettoDAO.getAllVoti() # Ci dà tutti gli esami presenti nel database
         for e in allEsami:
             self.append(e)
-
 
     def append(self, voto):
         # self.voti.append(voto) # principio del DUCK TYPING: vorremmo che Libretto si comportasse come una lista
@@ -25,8 +24,8 @@ class Libretto:
                                  # ---> li trattiamo allo stesso modo
         if (self.hasConflitto(voto) is False and self.hasVoto(voto) is False):
             self.voti.append(voto)
-            if not self.dao.hasVoto(voto):
-                self.dao.addVoto(voto)
+            if not LibrettoDAO.hasVoto(voto):
+                LibrettoDAO.addVoto(voto)
         else:
             raise ValueError("Voto già esistente")
 

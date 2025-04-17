@@ -4,7 +4,6 @@ import datetime
 import flet as ft
 from flet.core.list_view import ListView
 
-
 # Struttura MVC DA QUI...
 class View:
     def __init__(self, page: ft.Page):
@@ -34,7 +33,7 @@ class View:
         # RIGA dei controlli
         self._txtInNome = ft.TextField(
             label="Nome esame",
-            hint_text="Inserisci il nome dell'esame", # suggerimetno che appare nel field quando ci si clicca sopra
+            hint_text="Inserisci il nome dell'esame", # suggerimento che appare nel field quando ci si clicca sopra
             width=300
         )
         self._ddVoto = ft.Dropdown(
@@ -63,7 +62,6 @@ class View:
 
         self._txtOut = ListView(expand=True)
         self._page.add(row1, row2, row3, self._txtOut)
-
 
     def setController(self, c):
         self._controller = c   # la view sa chi è il controller
